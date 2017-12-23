@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+{% load static %}
+
+{% csrf_token %}
+
+	<head>
+		<title>博客详情页</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href={% static "css/blog/main.css" %} />
+                        <script>
+                     function goBack(){
+                         window.history.back()
+                     }
+                </script>
+	</head>
+	<body>
+
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="{% url 'blog:blog' %}">Aspire.Y BLOG</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="{% url 'blog:blog' %}">HOME</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="{% url 'blog:life_page' %}">
+											<h3>生活 随笔</h3>
+											<p>窗外呼啸而过的风景</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:photo_page' %}">
+											<h3>摄影 技术</h3>
+											<p>光和影的折叠艺术</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:tech_page' %}">
+											<h3>技术 文档</h3>
+											<p>未来世界的召唤<</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:share_page' %}">
+											<h3>知识 分享</h3>
+											<p>十年打磨的棱角</p>
+										</a>
+									</li>
+								</ul>
+							</section>
+
+						<!-- Actions -->
+{#							<section>#}
+{#								<ul class="actions vertical">#}
+{#									<li><a href="#" class="button big fit">Log In</a></li>#}
+{#								</ul>#}
+{#							</section>#}
+
+					</section>
+				<!-- Main -->
+
+					<div id="main">
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+                                        <h1>{{ posts.categories }}</h1>
+										<h2>{{ posts.title }}</h2>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2015-11-01">{{ posts.add_time }}</time>
+										<a href="#" class="author"><span class="name">{{ posts.author }}</span><img src={% static "pics/blog/avatar.jpg" %} alt="" /></a>
+									</div>
+								</header>
+								<p>{{ posts.context|safe }}</p>
+
+                                <div id="commeny-list" style="display: none">
+                                    {% for comment in comment_list %}
+                                        <div class="ss11" style="color: #5CACEE;font-family:Cursive;font-weight:bold;font-size:20px;"><span>{{ comment.created_time }}&nbsp&nbsp&nbsp&nbsp</span><span>{{ comment.name }}:</span> </div>
+                                      <div class="ss111" style="border-bottom:1px solid #F2F2F2;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ comment }}</div>
+                                    {% endfor %}
+                                    <form action="" method="POST" class="comment-form" enctype="multipart/form-data" >
+
+                                    <div class="comment-msg ">
+                                        <div id="form" type="text" >
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                {{ form }}
+
+
+                                            </form>
+                                        </div>
+                                        <input class="sub-btn fieldWrapper" type="submit" style="margin-left: 45%;margin-top: 20px;"/>
+                                    </div>
+                                    </form>
+
+
+                    </div>
+
+								<footer id="footer">
+									<ul class="actions">
+										<li>
+{#                                            <a href="{% url 'blog:blog' %}" class="button big" onclick="goBack()" >Back</a>#}
+                                            <button class="button big" onclick="goBack()">Back</button></li>
+                                        </li>
+
+									</ul>
+									<ul class="stats">
+										<li><a href="javascript:">General</a></li>
+										<li><a href="javascript:" id="likes-btn" class="icon fa-heart like-btn" methods="POST" type="submit">{{ posts.like }}</a></li>
+										<li><a href="javascript:" class="icon fa-comment comment-btn hide" data-id="{{post.id}}">{{comment_count}}</a></li>
+									</ul>
+
+								</footer>
+
+{#                                                                    <div class=""><input type="text" class="pl-input">{{ posts.id }}</div>#}
+
+							</article>
+
+
+
+</div>
+            </div>
+		<!-- Scripts -->
+			<script src={% static "js/blog/jquery.min.js" %}></script>
+			<script src={% static "js/blog/skel.min.js" %}></script>
+			<script src={% static "js/blog/util.js" %}></script>
+			<script src={% static "js/blog/main.js" %}></script>
+
+            <script>
+                $(document).on('click','.comment-btn',function () {
+                    if($(this).hasClass('hide')){
+                        $(this).addClass('show').removeClass('hide');
+                        $('#commeny-list').show();
+                    }else{
+                            $(this).addClass('hide').removeClass('show');
+                        $('#commeny-list').hide();
+                    }
+
+                })
+                $('.sub-btn').on('click',function () {
+
+                    var that=$(this);
+                    that.parents('.comment-msg').hide();
+                    that.parents('.comment-msg').before(msg);
+                    $.ajax({
+                        url: '',
+                        type:"POST",
+                        dataType:'',
+                        success:function (data) {
+                            var msg=$("form").serialize();
+
+                        },
+                        error:function () {
+
+                            alert('评论失败')
+                        }
+                    });
+                })
+
+                $('.like-btn').on('click',function () {
+
+                    var count = document.getElementById('likes-btn').innerText;
+
+                    $.ajax({
+                        url: '',
+                        type:"POST",
+                        dataType:'',
+                        data:{'Data':count},
+                        success:function (data) {
+                            alert('点赞+1');
+                            location.reload();
+
+                        },
+                        error:function () {
+
+                            alert('点赞失败')
+                        }
+                    });
+                })
+            </script>
+
+	</body>
+</html>

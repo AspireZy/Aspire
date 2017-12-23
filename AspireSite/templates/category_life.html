@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+{% load static %}
+{{ post.content|safe }}
+	<head>
+		<title>Hi,Welcome here</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href={% static "css/blog/main.css" %} />
+	</head>
+	<body>
+
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+					<header id="header">
+						<h1><a href="{% url 'blog:blog' %}">Aspire.Y BLOG</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="{% url 'blog:blog' %}">HOME</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="{% url 'blog:life_page' %}">
+											<h3>生活 随笔</h3>
+											<p>窗外呼啸而过的风景</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:photo_page' %}">
+											<h3>摄影 技术</h3>
+											<p>光和影的折叠艺术</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:tech_page' %}">
+											<h3>技术 文档</h3>
+											<p>未来世界的召唤<</p>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'blog:share_page' %}">
+											<h3>知识 分享</h3>
+											<p>十年打磨的棱角</p>
+										</a>
+									</li>
+								</ul>
+							</section>
+
+
+
+					</section>
+				<!-- Main -->
+
+					<div id="main">
+                        {%for life_post in life_posts %}
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+                                        <h1>{{ life_post.categories}}</h1>
+										<h2><a href="{% url 'blog:life_page'  %}">{{ life_post.title }}</a></h2>
+									</div>
+									<div class="meta">
+										<time class="published">{{life_post.add_time}}</time>
+										<a href="#" class="author"><span class="name">{{ life_post.author }}</span><img src={% static "pics/blog/avatar.jpg" %} alt="" /></a>
+									</div>
+								</header>
+								<a href="#" class="image featured"><img src={{ life_post.ArticleIMG.url_600x250 }} alt="" /></a>
+								<p></p>
+								<footer>
+									<ul class="actions">
+										<li><a href="{% url 'blog:article_page' life_post.id %}" class="button big">Continue Reading</a></li>
+									</ul>
+
+								</footer>
+							</article>
+
+                          {% endfor %}
+
+						<!-- Pagination -->
+					</div>
+				<!-- Sidebar -->
+					<section id="sidebar">
+
+						<!-- Intro -->
+							<section id="intro">
+								<a href="blog" class="logo"><img src={% static 'pics/brid.png' %} alt=""  style="margin-left: 250px"/></a>
+								<header>
+									<h2>&nbsp;&nbsp;小楼一夜听春雨<br>
+                                        &nbsp;&nbsp;深巷明朝卖杏花</h2>
+                                    <h3><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;陆游</a></h3>
+								</header>
+							</section>
+
+						<!-- Mini Posts -->
+							<section>
+								<div class="mini-posts">
+
+									<!-- Mini Post -->
+										<article class="mini-post">
+											<header>
+												<h3><a href="#">Odio congue mattis</a></h3>
+												<time class="published" datetime="2015-10-18">October 18, 2017</time>
+												<a href="#" class="author"><img src="{% static "pics/blog/avatar.jpg" %}" alt="" /></a>
+											</header>
+											<a href="#" class="image"><img src={% static "pages/1.png" %} alt="" /></a>
+										</article>
+
+									<!-- Mini Post -->
+										<article class="mini-post">
+											<header>
+												<h3><a href="#">Enim nisl veroeros</a></h3>
+												<time class="published" datetime="2015-10-17">October 17, 2017</time>
+												<a href="#" class="author"><img src="{% static "pics/blog/avatar.jpg" %}" alt="" /></a>
+											</header>
+											<a href="#" class="image"><img src={% static "pages/2.png" %} alt="" /></a>
+										</article>
+
+								</div>
+							</section>
+
+						<!-- About -->
+							<section class="blurb">
+								<h2>About</h2>
+								<h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在运维的路上渴望做开发的流浪者</h3><br>
+                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by Aspire.Y</h4>
+								<ul class="actions">
+									<li><a href="#" class="button">Learn More</a></li>
+								</ul>
+							</section>
+
+						<!-- Footer -->
+							<section id="footer">
+								<ul class="icons">
+									<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+									<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+								</ul><p class="copyright">&copy; <a href="#" target="_blank" title="模板之家"></a> - Collect from <a  target="_blank"></a>.</p>
+							</section>
+
+					</section>
+
+</div>
+
+		<!-- Scripts -->
+			<script src={% static "js/blog/jquery.min.js" %}></script>
+			<script src={% static "js/blog/skel.min.js" %}></script>
+			<script src={% static "js/blog/util.js" %}></script>
+			<script src={% static "js/blog/main.js" %}></script>
+
+	</body>
+</html>
